@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=KatagoUI
+GenericName=KatagoUI
+Comment=
+Exec=/home/cmk/kata-ui/kata-ui.sh
+Icon=gogui
+Type=Application
+Categories=Java;Game;BoardGame;
+MimeType=application/x-go-sgf;application/x-go+xml;
+Name[en_US]=KatagoUI
