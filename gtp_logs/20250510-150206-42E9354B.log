@@ -1,0 +1,46 @@
+2025-05-10 15:02:06+0300: Running with following config:
+allowResignation = true
+lagBuffer = 1.0
+logAllGTPCommunication = true
+logDir = gtp_logs
+logSearchInfo = true
+logSearchInfoForChosenMove = false
+logToStderr = false
+maxTimePondering = 60.0
+maxVisits = 1
+numAnalysisThreads = 1
+numSearchThreads = 6
+ponderingEnabled = false
+resignConsecTurns = 3
+resignThreshold = -0.90
+rules = tromp-taylor
+searchFactorAfterOnePass = 0.50
+searchFactorAfterTwoPass = 0.25
+searchFactorWhenWinning = 0.40
+searchFactorWhenWinningThreshold = 0.95
+
+2025-05-10 15:02:06+0300: GTP Engine starting...
+2025-05-10 15:02:06+0300: KataGo v1.15.3
+2025-05-10 15:02:06+0300: Using TrompTaylor rules initially, unless GTP/GUI overrides this
+2025-05-10 15:02:06+0300: Using 6 CPU thread(s) for search
+2025-05-10 15:02:06+0300: nnRandSeed0 = 11991882142041132386
+2025-05-10 15:02:06+0300: After dedups: nnModelFile0 = /home/cmk/katago/kata1-b10c128.txt.gz useFP16 auto useNHWC auto
+2025-05-10 15:02:06+0300: Initializing neural net buffer to be size 19 * 19 exactly
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 0: Model version 8
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 0: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 3: Model version 8
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 3: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 1: Model version 8
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 1: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 2: Model version 8
+2025-05-10 15:02:07+0300: Eigen (CPU) backend thread 2: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:02:07+0300: Loaded neural net with nnXLen 19 nnYLen 19
+2025-05-10 15:02:07+0300: Initializing board with boardXSize 19 boardYSize 19
+2025-05-10 15:02:07+0300: --------------
+2025-05-10 15:02:07+0300: WARNING: Config had unused keys! You may have a typo, an option you specified is being unused from /home/cmk/katago/gtp.cfg
+2025-05-10 15:02:07+0300: WARNING: Unused key 'numAnalysisThreads' in /home/cmk/katago/gtp.cfg
+2025-05-10 15:02:07+0300: --------------
+2025-05-10 15:02:07+0300: Loaded config /home/cmk/katago/gtp.cfg
+2025-05-10 15:02:07+0300: Loaded model /home/cmk/katago/kata1-b10c128.txt.gz
+2025-05-10 15:02:07+0300: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:02:07+0300: GTP ready, beginning main protocol loop

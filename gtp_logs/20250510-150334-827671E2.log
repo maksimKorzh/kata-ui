@@ -1,0 +1,218 @@
+2025-05-10 15:03:34+0300: Running with following config:
+allowResignation = true
+lagBuffer = 1.0
+logAllGTPCommunication = true
+logDir = gtp_logs
+logSearchInfo = true
+logSearchInfoForChosenMove = false
+logToStderr = false
+maxTimePondering = 60.0
+maxVisits = 1
+numAnalysisThreads = 1
+numSearchThreads = 6
+ponderingEnabled = false
+resignConsecTurns = 3
+resignThreshold = -0.90
+rules = tromp-taylor
+searchFactorAfterOnePass = 0.50
+searchFactorAfterTwoPass = 0.25
+searchFactorWhenWinning = 0.40
+searchFactorWhenWinningThreshold = 0.95
+
+2025-05-10 15:03:34+0300: GTP Engine starting...
+2025-05-10 15:03:34+0300: KataGo v1.15.3
+2025-05-10 15:03:34+0300: Using TrompTaylor rules initially, unless GTP/GUI overrides this
+2025-05-10 15:03:34+0300: Using 6 CPU thread(s) for search
+2025-05-10 15:03:34+0300: nnRandSeed0 = 5277435364411010647
+2025-05-10 15:03:34+0300: After dedups: nnModelFile0 = /home/cmk/katago/kata1-b10c128.txt.gz useFP16 auto useNHWC auto
+2025-05-10 15:03:34+0300: Initializing neural net buffer to be size 19 * 19 exactly
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 0: Model version 8
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 0: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 3: Model version 8
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 3: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 2: Model version 8
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 1: Model version 8
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 1: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:03:35+0300: Eigen (CPU) backend thread 2: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:03:36+0300: Loaded neural net with nnXLen 19 nnYLen 19
+2025-05-10 15:03:36+0300: Initializing board with boardXSize 19 boardYSize 19
+2025-05-10 15:03:36+0300: --------------
+2025-05-10 15:03:36+0300: WARNING: Config had unused keys! You may have a typo, an option you specified is being unused from /home/cmk/katago/gtp.cfg
+2025-05-10 15:03:36+0300: WARNING: Unused key 'numAnalysisThreads' in /home/cmk/katago/gtp.cfg
+2025-05-10 15:03:36+0300: --------------
+2025-05-10 15:03:36+0300: Loaded config /home/cmk/katago/gtp.cfg
+2025-05-10 15:03:36+0300: Loaded model /home/cmk/katago/kata1-b10c128.txt.gz
+2025-05-10 15:03:36+0300: Model name: b10c128-s1141046784-d204142634
+2025-05-10 15:03:36+0300: GTP ready, beginning main protocol loop
+2025-05-10 15:06:37+0300: Controller: showboard
+2025-05-10 15:06:37+0300: = MoveNum: 0 HASH: CDCBC1F514D7E680FACD226074256633
+   A B C D E F G H J K L M N O P Q R S T
+19 . . . . . . . . . . . . . . . . . . .
+18 . . . . . . . . . . . . . . . . . . .
+17 . . . . . . . . . . . . . . . . . . .
+16 . . . . . . . . . . . . . . . . . . .
+15 . . . . . . . . . . . . . . . . . . .
+14 . . . . . . . . . . . . . . . . . . .
+13 . . . . . . . . . . . . . . . . . . .
+12 . . . . . . . . . . . . . . . . . . .
+11 . . . . . . . . . . . . . . . . . . .
+10 . . . . . . . . . . . . . . . . . . .
+ 9 . . . . . . . . . . . . . . . . . . .
+ 8 . . . . . . . . . . . . . . . . . . .
+ 7 . . . . . . . . . . . . . . . . . . .
+ 6 . . . . . . . . . . . . . . . . . . .
+ 5 . . . . . . . . . . . . . . . . . . .
+ 4 . . . . . . . . . . . . . . . . . . .
+ 3 . . . . . . . . . . . . . . . . . . .
+ 2 . . . . . . . . . . . . . . . . . . .
+ 1 . . . . . . . . . . . . . . . . . . .
+Next player: Black
+Rules: {"friendlyPassOk":false,"hasButton":false,"ko":"POSITIONAL","komi":7.5,"scoring":"AREA","suicide":true,"tax":"NONE","whiteHandicapBonus":"0"}
+B stones captured: 0
+W stones captured: 0
+2025-05-10 15:06:50+0300: Controller: play B Q14
+2025-05-10 15:06:50+0300: = 
+2025-05-10 15:06:55+0300: Controller: play D4
+2025-05-10 15:06:55+0300: ? Expected two arguments for play but got 'D4'
+2025-05-10 15:07:00+0300: Controller: showboard
+2025-05-10 15:07:00+0300: = MoveNum: 1 HASH: 71514DF484A5A72FF8A4F2921DEBC257
+   A B C D E F G H J K L M N O P Q R S T
+19 . . . . . . . . . . . . . . . . . . .
+18 . . . . . . . . . . . . . . . . . . .
+17 . . . . . . . . . . . . . . . . . . .
+16 . . . . . . . . . . . . . . . . . . .
+15 . . . . . . . . . . . . . . . . . . .
+14 . . . . . . . . . . . . . . . X1. . .
+13 . . . . . . . . . . . . . . . . . . .
+12 . . . . . . . . . . . . . . . . . . .
+11 . . . . . . . . . . . . . . . . . . .
+10 . . . . . . . . . . . . . . . . . . .
+ 9 . . . . . . . . . . . . . . . . . . .
+ 8 . . . . . . . . . . . . . . . . . . .
+ 7 . . . . . . . . . . . . . . . . . . .
+ 6 . . . . . . . . . . . . . . . . . . .
+ 5 . . . . . . . . . . . . . . . . . . .
+ 4 . . . . . . . . . . . . . . . . . . .
+ 3 . . . . . . . . . . . . . . . . . . .
+ 2 . . . . . . . . . . . . . . . . . . .
+ 1 . . . . . . . . . . . . . . . . . . .
+Next player: White
+Rules: {"friendlyPassOk":false,"hasButton":false,"ko":"POSITIONAL","komi":7.5,"scoring":"AREA","suicide":true,"tax":"NONE","whiteHandicapBonus":"0"}
+B stones captured: 0
+W stones captured: 0
+2025-05-10 15:07:10+0300: Controller: play W D4
+2025-05-10 15:07:10+0300: = 
+2025-05-10 15:07:12+0300: Controller: showboard
+2025-05-10 15:07:12+0300: = MoveNum: 2 HASH: 149E5DAB1C9B436B847482C3BCB0C58A
+   A B C D E F G H J K L M N O P Q R S T
+19 . . . . . . . . . . . . . . . . . . .
+18 . . . . . . . . . . . . . . . . . . .
+17 . . . . . . . . . . . . . . . . . . .
+16 . . . . . . . . . . . . . . . . . . .
+15 . . . . . . . . . . . . . . . . . . .
+14 . . . . . . . . . . . . . . . X1. . .
+13 . . . . . . . . . . . . . . . . . . .
+12 . . . . . . . . . . . . . . . . . . .
+11 . . . . . . . . . . . . . . . . . . .
+10 . . . . . . . . . . . . . . . . . . .
+ 9 . . . . . . . . . . . . . . . . . . .
+ 8 . . . . . . . . . . . . . . . . . . .
+ 7 . . . . . . . . . . . . . . . . . . .
+ 6 . . . . . . . . . . . . . . . . . . .
+ 5 . . . . . . . . . . . . . . . . . . .
+ 4 . . . O2. . . . . . . . . . . . . . .
+ 3 . . . . . . . . . . . . . . . . . . .
+ 2 . . . . . . . . . . . . . . . . . . .
+ 1 . . . . . . . . . . . . . . . . . . .
+Next player: Black
+Rules: {"friendlyPassOk":false,"hasButton":false,"ko":"POSITIONAL","komi":7.5,"scoring":"AREA","suicide":true,"tax":"NONE","whiteHandicapBonus":"0"}
+B stones captured: 0
+W stones captured: 0
+2025-05-10 15:07:25+0300: Controller: new
+2025-05-10 15:07:25+0300: ? unknown command
+2025-05-10 15:07:27+0300: Controller: newgame
+2025-05-10 15:07:27+0300: ? unknown command
+2025-05-10 15:07:33+0300: Controller: list_commands
+2025-05-10 15:07:33+0300: = protocol_version
+name
+version
+known_command
+list_commands
+quit
+boardsize
+rectangular_boardsize
+clear_board
+set_position
+komi
+get_komi
+play
+undo
+kata-get-rules
+kata-set-rule
+kata-set-rules
+kata-get-models
+kata-get-param
+kata-set-param
+kata-list-params
+kgs-rules
+genmove
+kata-search
+kata-search_cancellable
+genmove_debug
+kata-search_debug
+clear_cache
+showboard
+fixed_handicap
+place_free_handicap
+set_free_handicap
+time_settings
+kgs-time_settings
+time_left
+kata-list_time_settings
+kata-time_settings
+final_score
+final_status_list
+loadsgf
+printsgf
+lz-genmove_analyze
+kata-genmove_analyze
+kata-search_analyze
+kata-search_analyze_cancellable
+lz-analyze
+kata-analyze
+kata-raw-nn
+kata-raw-human-nn
+cputime
+gomill-cpu_time
+kata-benchmark
+kata-debug-print-tc
+debug_moves
+stop
+2025-05-10 15:07:43+0300: Controller: clear_board
+2025-05-10 15:07:43+0300: = 
+2025-05-10 15:07:46+0300: Controller: showboard
+2025-05-10 15:07:46+0300: = MoveNum: 0 HASH: CDCBC1F514D7E680FACD226074256633
+   A B C D E F G H J K L M N O P Q R S T
+19 . . . . . . . . . . . . . . . . . . .
+18 . . . . . . . . . . . . . . . . . . .
+17 . . . . . . . . . . . . . . . . . . .
+16 . . . . . . . . . . . . . . . . . . .
+15 . . . . . . . . . . . . . . . . . . .
+14 . . . . . . . . . . . . . . . . . . .
+13 . . . . . . . . . . . . . . . . . . .
+12 . . . . . . . . . . . . . . . . . . .
+11 . . . . . . . . . . . . . . . . . . .
+10 . . . . . . . . . . . . . . . . . . .
+ 9 . . . . . . . . . . . . . . . . . . .
+ 8 . . . . . . . . . . . . . . . . . . .
+ 7 . . . . . . . . . . . . . . . . . . .
+ 6 . . . . . . . . . . . . . . . . . . .
+ 5 . . . . . . . . . . . . . . . . . . .
+ 4 . . . . . . . . . . . . . . . . . . .
+ 3 . . . . . . . . . . . . . . . . . . .
+ 2 . . . . . . . . . . . . . . . . . . .
+ 1 . . . . . . . . . . . . . . . . . . .
+Next player: Black
+Rules: {"friendlyPassOk":false,"hasButton":false,"ko":"POSITIONAL","komi":7.5,"scoring":"AREA","suicide":true,"tax":"NONE","whiteHandicapBonus":"0"}
+B stones captured: 0
+W stones captured: 0

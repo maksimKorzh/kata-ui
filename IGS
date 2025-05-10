@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=IGS
+GenericName=IGS
+Comment=
+Exec=/home/cmk/igs-client/igs.sh
+Icon=gogui
+Type=Application
+Categories=Java;Game;BoardGame;
+MimeType=application/x-go-sgf;application/x-go+xml;
