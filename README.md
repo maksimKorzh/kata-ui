@@ -11,6 +11,11 @@ via GTP commands, type "help" for more details. Board is synced
 with **showboard** command, printing board in the console.
 Whenever you click on board square a move is sent as a GTP command.
 
+# Shortcuts
+ - Placing stone on board sends command **play <side> <move>**
+ - F1 sends command **genmove <side>**
+ - F2 sends command **undo**
+
 # How to install it
     git clone https://github.com/maksimKorzh/igs-client
     cd igs-client
