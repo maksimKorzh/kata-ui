@@ -179,7 +179,7 @@ input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     const input = document.getElementById('input');
     window.katagoAPI.sendCommand(input.value);
-    window.katagoAPI.sendCommand('showboard');
+    if (input.value != 'final_score') window.katagoAPI.sendCommand('showboard');
     input.value = '';
     let terminal = document.getElementById('output');
     terminal.scrollTop = terminal.scrollHeight;
