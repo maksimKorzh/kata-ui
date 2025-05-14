@@ -42,7 +42,7 @@ function createWindow() {
   });
 
   katago.stderr.on('data', (data) => {
-    win.webContents.send('katago-output', `${data.toString()}`);
+    win.webContents.send('katago-output', data.toString());
   });
 
   ipcMain.on('send-command', (event, command) => {
