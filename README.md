@@ -11,10 +11,15 @@ via GTP commands, type "help" for more details. Board is synced
 with **showboard** command, printing board in the console.
 Whenever you click on board square a move is sent as a GTP command.
 
+# Loading SGF
+Use katago **loadsgf** command
+
 # Shortcuts
  - Placing stone on board sends command **play**
- - F1 sends command **genmove**
- - F2 sends command **undo**
+ - Mouse scroll down navigates to next SGF move
+ - Mouse scroll up takes move back
+ - Mouse right click runs **genmove <color>** command
+ - Mouse middle click runs **final_score** command, duplicates result in alert window
 
 # How to install it
     git clone https://github.com/maksimKorzh/igs-client

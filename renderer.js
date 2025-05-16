@@ -8,10 +8,12 @@ const moveSound = new Audio('./assets/112-2052.wav');
 
 var canvas, ctx, cell;
 var board = [];
-var sgf = '';
+var sgf = '/home/cmk/go-rank-estimator/game.sgf';
 var size = 19;
 var side = 'B';
 var userMove = -1;
+var gamelen = 0;
+var curmove = 0;
 
 bgImage.src = './assets/board_fox.png';
 blackStoneImage.src = './assets/stone_b_fox.png';
@@ -73,7 +75,6 @@ function drawBoard() {
       
       if (sq == userMove) {
         let color = board[sq] == 1 ? 'white' : 'black';
-        sgf += (squareToCoord(sq));
         ctx.beginPath();
         ctx.arc(col * cell+(cell/4)*2, row * cell+(cell/4)*2, cell / 5 - 2, 0, 2 * Math.PI);
         ctx.fillStyle = color;
@@ -133,13 +134,12 @@ function resizeCanvas() {
   `;
 })();
 
-function sendCommand() {
-}
-
 window.katagoAPI.onOutput((data) => {
   const output = document.getElementById('output');
   output.textContent += data;
   output.scrollTop = output.scrollHeight;
+  
+  // Sync board
   if (data.includes('A B C D E F G')) {
     clearBoard();
     if (data.includes('X3') || data.includes('O3')) {
@@ -173,13 +173,25 @@ window.katagoAPI.onOutput((data) => {
       } rank++;
     } drawBoard();
   }
+
+  // SGF
+  if (data.includes('(;FF[')) gamelen = data.split('];').slice(1).length;
+
+  // Final Score
+  if (data.includes('= W+') || data.includes('= B+')) alert(data.replace('=', 'Final Score:'));
 });
 
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     const input = document.getElementById('input');
     window.katagoAPI.sendCommand(input.value);
-    if (input.value != 'final_score' && input.value != 'list_commands')
+    if (input.value.includes('loadsgf')) {
+      try {
+        window.katagoAPI.sendCommand('printsgf');
+        sgf = input.value.split(' ')[1];
+      } catch {}
+    }
+    if (input.value != 'final_score' && input.value != 'list_commands' && input.value != 'lz-analyze')
       window.katagoAPI.sendCommand('showboard');
     input.value = '';
     let terminal = document.getElementById('output');
@@ -187,12 +199,30 @@ input.addEventListener('keydown', (e) => {
   }
 });
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'F1') {
-    window.katagoAPI.sendCommand('genmove ' + side);
-    window.katagoAPI.sendCommand('showboard');
-  } else if (e.key ==='F2') {
+// Listen for mouse wheel (scroll)
+window.addEventListener('wheel', (event) => {
+  if (event.deltaY < 0) {
+    if (curmove > 0) curmove--;
     window.katagoAPI.sendCommand('undo');
     window.katagoAPI.sendCommand('showboard');
+  } else {
+    if (curmove < gamelen) curmove++;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf);
+    window.katagoAPI.sendCommand('printsgf');
+    for (let i = gamelen; i > curmove; i--) window.katagoAPI.sendCommand('undo');
+    window.katagoAPI.sendCommand('showboard');
+  }
+});
+
+// Listen for right-click
+window.addEventListener('contextmenu', (event) => {
+  event.preventDefault(); // optional: prevent default right-click menu
+  window.katagoAPI.sendCommand('genmove ' + side);
+  window.katagoAPI.sendCommand('showboard');
+});
+
+window.addEventListener('mousedown', (event) => {
+  if (event.button === 1) {
+    window.katagoAPI.sendCommand('final_score');
   }
 });
