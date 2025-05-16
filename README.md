@@ -15,10 +15,10 @@ Whenever you click on board square a move is sent as a GTP command.
 Use katago **loadsgf** command
 
 # Shortcuts
- - Placing stone on board sends command **play**
- - Mouse scroll down navigates to next SGF move
- - Mouse scroll up takes move back
- - Mouse right click runs **genmove <color>** command
+ - Placing stone on board sends **play** command
+ - Mouse scroll down navigates to the next SGF move
+ - Mouse scroll up takes the move back
+ - Mouse right click runs **genmove** command
  - Mouse middle click runs **final_score** command, duplicates result in alert window
 
 # How to install it
