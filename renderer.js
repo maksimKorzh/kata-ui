@@ -12,7 +12,6 @@ var sgf = '/home/cmk/go-rank-estimator/game.sgf';
 var size = 19;
 var side = 'B';
 var userMove = -1;
-var gamelen = 0;
 var curmove = 0;
 
 bgImage.src = './assets/board_fox.png';
@@ -174,9 +173,6 @@ window.katagoAPI.onOutput((data) => {
     } drawBoard();
   }
 
-  // SGF
-  if (data.includes('(;FF[')) gamelen = data.split('];').slice(1).length;
-
   // Final Score
   if (data.includes('= W+') || data.includes('= B+')) alert(data.replace('=', 'Final Score:'));
 });
@@ -206,10 +202,8 @@ window.addEventListener('wheel', (event) => {
     window.katagoAPI.sendCommand('undo');
     window.katagoAPI.sendCommand('showboard');
   } else {
-    if (curmove < gamelen) curmove++;
-    window.katagoAPI.sendCommand('loadsgf ' + sgf);
-    window.katagoAPI.sendCommand('printsgf');
-    for (let i = gamelen; i > curmove; i--) window.katagoAPI.sendCommand('undo');
+    curmove++;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
     window.katagoAPI.sendCommand('showboard');
   }
 });

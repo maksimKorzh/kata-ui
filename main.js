@@ -38,8 +38,7 @@ function createWindow() {
   katago = spawn(KATAGO_PATH, ['gtp', '-model', KATAGO_NET, '-config', KATAGO_CONFIG]);
 
   katago.stdout.on('data', (data) => {
-    if (data.toString() != '\n' && !data.toString().includes('= \n') && !data.toString().includes('= \n\n') && !data.toString().includes('= \n\n= \n\n'))
-      win.webContents.send('katago-output', data.toString());
+    win.webContents.send('katago-output', data.toString());
   });
 
   katago.stderr.on('data', (data) => {
