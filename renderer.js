@@ -12,7 +12,7 @@ var sgf = '/home/cmk/go-rank-estimator/game.sgf';
 var size = 19;
 var side = 'B';
 var userMove = -1;
-var curmove = 0;
+var curmove = 1;
 
 bgImage.src = './assets/board_fox.png';
 blackStoneImage.src = './assets/stone_b_fox.png';
