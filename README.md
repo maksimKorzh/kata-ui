@@ -19,7 +19,7 @@ Use katago **loadsgf** command
  - Mouse scroll down navigates to the next SGF move
  - Mouse scroll up takes the move back
  - Mouse right click runs **genmove** command
- - Mouse middle click runs **final_score** command, duplicates result in alert window
+ - Mouse middle click toggles analysis mode, you can also use **kata-analyze 1** and **stop**
 
 # How to install it
     git clone https://github.com/maksimKorzh/igs-client

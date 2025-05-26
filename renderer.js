@@ -13,6 +13,7 @@ var size = 19;
 var side = 'B';
 var userMove = -1;
 var curmove = 1;
+var ponder = 0;
 
 bgImage.src = './assets/board_fox.png';
 blackStoneImage.src = './assets/stone_b_fox.png';
@@ -85,14 +86,6 @@ function drawBoard() {
   }
 }
 
-function squareToCoord(sq) {
-  let color = board[sq] == 1 ? 'B' : 'W';
-  let col = userMove % 19;
-  let row = Math.floor(userMove / 19);
-  let move = ';' + color + '[' + 'abcdefghijklmnopqrs'[col] + 'abcdefghijklmnopqrs'[row] + ']';
-  return move;
-}
-
 function userInput(event) {
   let rect = canvas.getBoundingClientRect();
   let mouseX = event.clientX - rect.left;
@@ -102,6 +95,7 @@ function userInput(event) {
   let sq = 'ABCDEFGHJKLMNOPQRST'[col] + (19-row);
   window.katagoAPI.sendCommand('play ' + side + ' ' + sq);
   window.katagoAPI.sendCommand('showboard');
+  ponder = 0;
 }
 
 function resizeCanvas() {
@@ -172,6 +166,47 @@ window.katagoAPI.onOutput((data) => {
       } rank++;
     } drawBoard();
   }
+   
+  // Kata Analyze
+  if (data.includes('move')) {
+    drawBoard();
+    let oldVisits = 0;
+    let oldWinrate = 0;
+    let blueMove = 0;
+    data.split('info').forEach((i) => {
+      try {
+        if (blueMove) {
+          blueMove = 0;
+          return;
+        }
+        let move = i.split('move ')[1].split(' ')[0];
+        let col = 'ABCDEFGHJKLMNOPQRST'.indexOf(move[0]);
+        let row = 19-parseInt(move.slice(1));
+        winrate = Math.floor(parseFloat(i.split('winrate ')[1].split(' ')[0]) * 100);
+        visits = i.split('visits ')[1].split(' ')[0];
+        if (visits < 10) return;
+        ctx.beginPath();
+        ctx.arc(col * cell + cell / 2, row * cell + cell / 2, cell / 2 - 2, 0, 2 * Math.PI);
+        ctx.fillStyle = 'lightgreen';
+        if (winrate > oldWinrate) {
+          blueMove = 1;
+          oldWinrate = winrate;
+          ctx.fillStyle = 'cyan';
+        }
+        else if (visits > oldVisits) oldVisits = visits;
+        else if (oldVisits > visits && oldWinrate > winrate) ctx.fillStyle = 'orange';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.lineWidth = 1;
+        ctx.fillStyle = 'black';
+        ctx.font = cell / 3 + 'px Monospace';
+        ctx.fillText(winrate + '%', col * cell + cell / 5, row * cell + cell / 2);
+        ctx.font = cell / 4 + 'px Monospace';
+        ctx.fillText(visits, col * cell + cell / 4, row * cell + cell / 1.3);
+      } catch {}
+    });
+  }
 
   // Final Score
   if (data.includes('= W+') || data.includes('= B+')) alert(data.replace('=', 'Final Score:'));
@@ -187,7 +222,7 @@ input.addEventListener('keydown', (e) => {
         curmove = parseInt(input.value.split(' ')[2]);
       } catch {}
     }
-    if (input.value != 'final_score' && input.value != 'list_commands' && input.value != 'lz-analyze')
+    if (input.value != 'final_score' && input.value != 'list_commands' && !input.value.includes('kata-analyze'))
       window.katagoAPI.sendCommand('showboard');
     input.value = '';
     let terminal = document.getElementById('output');
@@ -197,6 +232,7 @@ input.addEventListener('keydown', (e) => {
 
 // Listen for mouse wheel (scroll)
 window.addEventListener('wheel', (event) => {
+  ponder = 0;
   if (event.deltaY < 0) {
     if (curmove > 0) curmove--;
     window.katagoAPI.sendCommand('undo');
@@ -217,6 +253,8 @@ window.addEventListener('contextmenu', (event) => {
 
 window.addEventListener('mousedown', (event) => {
   if (event.button === 1) {
-    window.katagoAPI.sendCommand('final_score');
+    ponder ^= 1;
+    if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
+    else window.katagoAPI.sendCommand('stop')
   }
 });

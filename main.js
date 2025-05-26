@@ -37,8 +37,20 @@ function createWindow() {
   // Start KataGo GTP process
   katago = spawn(KATAGO_PATH, ['gtp', '-model', KATAGO_NET, '-config', KATAGO_CONFIG]);
 
+  var infoLines = 0;
   katago.stdout.on('data', (data) => {
-    win.webContents.send('katago-output', data.toString());
+    let response = data.toString();
+    if (response.includes('info move')) {
+      infoLines++;
+      if (infoLines <= 100) {
+        if (infoLines == 100) {
+          infoLines = 0;
+          response = response.replaceAll(' info move', '\ninfo move') + '\n';
+          if (!response.includes('info move')) return;
+        } else return;
+      }
+    }
+    win.webContents.send('katago-output', response);
   });
 
   katago.stderr.on('data', (data) => {
