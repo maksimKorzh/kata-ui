@@ -182,7 +182,10 @@ input.addEventListener('keydown', (e) => {
     const input = document.getElementById('input');
     window.katagoAPI.sendCommand(input.value);
     if (input.value.includes('loadsgf')) {
-      try {sgf = input.value.split(' ')[1];} catch {}
+      try {
+        sgf = input.value.split(' ')[1];
+        curmove = parseInt(input.value.split(' ')[2]);
+      } catch {}
     }
     if (input.value != 'final_score' && input.value != 'list_commands' && input.value != 'lz-analyze')
       window.katagoAPI.sendCommand('showboard');
