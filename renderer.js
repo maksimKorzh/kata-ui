@@ -95,7 +95,6 @@ function userInput(event) {
   let sq = 'ABCDEFGHJKLMNOPQRST'[col] + (19-row);
   window.katagoAPI.sendCommand('play ' + side + ' ' + sq);
   window.katagoAPI.sendCommand('showboard');
-  ponder = 0;
 }
 
 function resizeCanvas() {
@@ -165,6 +164,7 @@ window.katagoAPI.onOutput((data) => {
         file++;
       } rank++;
     } drawBoard();
+    if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
   }
    
   // Kata Analyze
@@ -232,7 +232,6 @@ input.addEventListener('keydown', (e) => {
 
 // Listen for mouse wheel (scroll)
 window.addEventListener('wheel', (event) => {
-  ponder = 0;
   if (event.deltaY < 0) {
     if (curmove > 0) curmove--;
     window.katagoAPI.sendCommand('undo');
@@ -255,6 +254,9 @@ window.addEventListener('mousedown', (event) => {
   if (event.button === 1) {
     ponder ^= 1;
     if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
-    else window.katagoAPI.sendCommand('stop')
+    else {
+      window.katagoAPI.sendCommand('stop');
+      drawBoard();
+    }
   }
 });
