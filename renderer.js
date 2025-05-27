@@ -203,7 +203,11 @@ window.katagoAPI.onOutput((data) => {
         ctx.font = cell / 3 + 'px Monospace';
         ctx.fillText(winrate + '%', col * cell + cell / 5, row * cell + cell / 2);
         ctx.font = cell / 4 + 'px Monospace';
-        ctx.fillText(visits, col * cell + cell / 4, row * cell + cell / 1.3);
+        let pos = 0;
+        if (visits < 100) pos = 3;
+        else if (visits >= 100 && visits < 1000) pos = 4;
+        else pos = 5;
+        ctx.fillText(visits, col * cell + cell / pos, row * cell + cell / 1.3);
       } catch {}
     });
   }
@@ -224,6 +228,8 @@ input.addEventListener('keydown', (e) => {
     }
     if (input.value != 'final_score' && input.value != 'list_commands' && !input.value.includes('kata-analyze'))
       window.katagoAPI.sendCommand('showboard');
+    if (input.value.includes('kata-analyze')) ponder = 1;
+    if (input.value == 'stop') ponder = 0;
     input.value = '';
     let terminal = document.getElementById('output');
     terminal.scrollTop = terminal.scrollHeight;
