@@ -95,6 +95,7 @@ function userInput(event) {
   let sq = 'ABCDEFGHJKLMNOPQRST'[col] + (19-row);
   window.katagoAPI.sendCommand('play ' + side + ' ' + sq);
   window.katagoAPI.sendCommand('showboard');
+  curmove++;
 }
 
 function resizeCanvas() {
