@@ -237,6 +237,29 @@ input.addEventListener('keydown', (e) => {
   }
 });
 
+// Arrow keys controls
+document.addEventListener('keydown', (e) => {
+  if (e.key == 'ArrowRight') {
+    curmove++;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+    window.katagoAPI.sendCommand('showboard');
+  } else if (e.key == 'ArrowLeft') {
+    if (curmove > 0) curmove--;
+    window.katagoAPI.sendCommand('undo');
+    window.katagoAPI.sendCommand('showboard');
+  } else if (e.key == 'ArrowDown') {
+    ponder ^= 1;
+    if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
+    else {
+      window.katagoAPI.sendCommand('stop');
+      drawBoard();
+    }
+  } else if (e.key == 'ArrowUp') {
+    window.katagoAPI.sendCommand('genmove ' + side);
+    window.katagoAPI.sendCommand('showboard');
+  }
+});
+
 // Listen for mouse wheel (scroll)
 window.addEventListener('wheel', (event) => {
   if (event.deltaY < 0) {
