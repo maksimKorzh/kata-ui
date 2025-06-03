@@ -11,6 +11,7 @@ let katago;
 
 function createWindow() {
   const win = new BrowserWindow({
+    fullscreen: true,
     width: 1720,
     minWidth:1720,
     height: 1000,
