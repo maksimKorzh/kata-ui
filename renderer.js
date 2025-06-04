@@ -247,14 +247,22 @@ document.addEventListener('keydown', (e) => {
     if (curmove > 0) curmove--;
     window.katagoAPI.sendCommand('undo');
     window.katagoAPI.sendCommand('showboard');
+  } else if (e.key == 'ArrowUp') {
+    curmove += 10;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+    window.katagoAPI.sendCommand('showboard');
   } else if (e.key == 'ArrowDown') {
+    if ((curmove-5) > 0) curmove -= 10;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+    window.katagoAPI.sendCommand('showboard');
+  } else if (e.key == ' ') {
     ponder ^= 1;
     if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
     else {
       window.katagoAPI.sendCommand('stop');
       drawBoard();
     }
-  } else if (e.key == 'ArrowUp') {
+  } else if (e.key == 'Ctrl') {
     window.katagoAPI.sendCommand('genmove ' + side);
     window.katagoAPI.sendCommand('showboard');
   }

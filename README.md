@@ -16,10 +16,12 @@ Use katago **loadsgf** command
 
 # Shortcuts
  - Placing stone on board sends **play** command
- - Mouse scroll down navigates to the next SGF move
- - Mouse scroll up takes the move back
- - Mouse right click runs **genmove** command
- - Mouse middle click toggles analysis mode, you can also use **kata-analyze 1** and **stop**
+ - ArrowRight / Mouse scroll down navigates to the next SGF move
+ - ArrowLeft / Mouse scroll up takes the move back
+ - ArrowUp navigates 10 moves forward
+ - ArrowDown navigates 10 moves backward
+ - Ctrl / Mouse right click runs **genmove** command
+ - Space / Mouse middle click toggles analysis mode, you can also use **kata-analyze 1** and **stop**
 
 # How to install it
     git clone https://github.com/maksimKorzh/igs-client
