@@ -247,11 +247,11 @@ document.addEventListener('keydown', (e) => {
     if (curmove > 0) curmove--;
     window.katagoAPI.sendCommand('undo');
     window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == 'ArrowUp') {
+  } else if (e.key == 'ArrowDown') {
     curmove += 10;
     window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
     window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == 'ArrowDown') {
+  } else if (e.key == 'ArrowUp') {
     if ((curmove-5) > 0) curmove -= 10;
     window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
     window.katagoAPI.sendCommand('showboard');
