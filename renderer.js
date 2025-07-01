@@ -108,7 +108,7 @@ function resizeCanvas() {
 (function initGUI() {
   let container = document.getElementById('goban');
   canvas = document.createElement('canvas');
-  canvas.style = 'border: 2px solid black; margin: 4px; margin-top: 16px;';
+  canvas.style = 'border: 1px solid #111;';
   container.appendChild(canvas);
   canvas.addEventListener('click', userInput);
   ctx = canvas.getContext('2d');
@@ -118,7 +118,7 @@ function resizeCanvas() {
   clearBoard();
   resizeCanvas();
   document.getElementById('controls').innerHTML = `
-    <div style="display: flex; gap: 4px; width: 99%; margin-left: 4px;">                               
+    <div style="display: flex; gap: 4px; width: 100%;">                               
       <button onclick="first();"><<<</button>
       <button onclick="prevFew();"><<</button>
       <button onclick="prev();"><</button>
