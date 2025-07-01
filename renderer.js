@@ -212,9 +212,6 @@ window.katagoAPI.onOutput((data) => {
       } catch {}
     });
   }
-
-  // Final Score
-  if (data.includes('= W+') || data.includes('= B+')) alert(data.replace('=', 'Final Score:'));
 });
 
 input.addEventListener('keydown', (e) => {
