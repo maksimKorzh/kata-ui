@@ -9,6 +9,7 @@ const moveSound = new Audio('./assets/112-2052.wav');
 var canvas, ctx, cell;
 var board = [];
 var sgf = '/home/cmk/go-rank-estimator/game.sgf';
+var gamelen = 0;
 var size = 19;
 var side = 'B';
 var userMove = -1;
@@ -99,14 +100,9 @@ function userInput(event) {
 }
 
 function resizeCanvas() {
-  canvas.width = window.innerHeight-34;
+  canvas.width = window.innerHeight-80;
   canvas.height = canvas.width;
   drawBoard();
-  try {
-    document.getElementById('output').style.width = (window.innerWidth - canvas.width-34)  + 'px';
-    document.getElementById('output').style.height = canvas.width-58 + 'px';
-    document.getElementById('input').style.width = (window.innerWidth - canvas.width-34)  + 'px';
-  } catch (e) {}
 }
 
 (function initGUI() {
@@ -121,17 +117,20 @@ function resizeCanvas() {
   window.addEventListener('resize', resizeCanvas);
   clearBoard();
   resizeCanvas();
-  document.getElementById('terminal').innerHTML = `
-    <pre id="output" style="width: ` + (window.innerWidth - canvas.width-34) + `px; height: ` + (canvas.width-58) + `px; font-size: calc(100vw/113); overflow: hidden;"></pre>
-    <input id="input" spellcheck="false" placeholder="Type a command..." style="width: ` + (window.innerWidth - canvas.width-34) + `px; font-size: 18px;" autofocus>
+  document.getElementById('controls').innerHTML = `
+    <div style="display: flex; gap: 4px; width: 99%; margin-left: 4px;">                               
+      <button onclick="first();"><<<</button>
+      <button onclick="prevFew();"><<</button>
+      <button onclick="prev();"><</button>
+      <button onclick="analyze();">ANALYZE</button>
+      <button onclick="next();">></button>
+      <button onclick="nextFew();">>></button>
+      <button onclick="last();">>>></button>
+    </div>
   `;
 })();
 
 window.katagoAPI.onOutput((data) => {
-  const output = document.getElementById('output');
-  output.textContent += data;
-  output.scrollTop = output.scrollHeight;
-  
   // Sync board
   if (data.includes('A B C D E F G')) {
     clearBoard();
@@ -184,6 +183,7 @@ window.katagoAPI.onOutput((data) => {
         let col = 'ABCDEFGHJKLMNOPQRST'.indexOf(move[0]);
         let row = 19-parseInt(move.slice(1));
         winrate = Math.floor(parseFloat(i.split('winrate ')[1].split(' ')[0]) * 100);
+        score = Math.floor(parseFloat(i.split('scoreLead ')[1].split(' ')[0]));
         visits = i.split('visits ')[1].split(' ')[0];
         if (visits < 10) return;
         ctx.beginPath();
@@ -205,65 +205,59 @@ window.katagoAPI.onOutput((data) => {
         ctx.fillText(winrate + '%', col * cell + cell / 5, row * cell + cell / 2);
         ctx.font = cell / 4 + 'px Monospace';
         let pos = 0;
-        if (visits < 100) pos = 3;
-        else if (visits >= 100 && visits < 1000) pos = 4;
-        else pos = 5;
-        ctx.fillText(visits, col * cell + cell / pos, row * cell + cell / 1.3);
+        ctx.fillText(score, col * cell + cell / 4, row * cell + cell / 1.3);
       } catch {}
     });
   }
+  
+  // Print SGF
+  if (data.includes(';FF')) gamelen = data.split(';').length-1;
 });
 
-input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const input = document.getElementById('input');
-    window.katagoAPI.sendCommand(input.value);
-    if (input.value.includes('loadsgf')) {
-      try {
-        sgf = input.value.split(' ')[1];
-        curmove = parseInt(input.value.split(' ')[2]);
-      } catch {}
-    }
-    if (input.value != 'final_score' && input.value != 'list_commands' && !input.value.includes('kata-analyze'))
-      window.katagoAPI.sendCommand('showboard');
-    if (input.value.includes('kata-analyze')) ponder = 1;
-    if (input.value == 'stop') ponder = 0;
-    input.value = '';
-    let terminal = document.getElementById('output');
-    terminal.scrollTop = terminal.scrollHeight;
-  }
-});
+function first() {
+  curmove = 1;
+  window.katagoAPI.sendCommand('clear_board');
+  window.katagoAPI.sendCommand('showboard');
+}
 
-// Arrow keys controls
-document.addEventListener('keydown', (e) => {
-  if (e.key == 'ArrowRight') {
-    curmove++;
-    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
-    window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == 'ArrowLeft') {
-    if (curmove > 0) curmove--;
-    window.katagoAPI.sendCommand('undo');
-    window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == 'ArrowDown') {
-    curmove += 10;
-    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
-    window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == 'ArrowUp') {
-    if ((curmove-5) > 0) curmove -= 10;
-    window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
-    window.katagoAPI.sendCommand('showboard');
-  } else if (e.key == ' ') {
-    ponder ^= 1;
-    if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
-    else {
-      window.katagoAPI.sendCommand('stop');
-      drawBoard();
-    }
-  } else if (e.key == 'Ctrl') {
-    window.katagoAPI.sendCommand('genmove ' + side);
-    window.katagoAPI.sendCommand('showboard');
+function last() {
+  curmove = gamelen;
+  window.katagoAPI.sendCommand('loadsgf ' + sgf);
+  window.katagoAPI.sendCommand('showboard');
+}
+
+function next() {
+  curmove++;
+  window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+  window.katagoAPI.sendCommand('showboard');
+}
+
+function nextFew() {
+  if ((curmove+15) < gamelen) curmove += 15;
+  window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+  window.katagoAPI.sendCommand('showboard');
+}
+
+function prevFew() {
+  if ((curmove-15) > 0) curmove -= 15;
+  window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
+  window.katagoAPI.sendCommand('showboard');
+}
+
+function prev() {
+  if (curmove > 0) curmove--;
+  window.katagoAPI.sendCommand('undo');
+  window.katagoAPI.sendCommand('showboard');
+}
+
+function analyze() {
+  ponder ^= 1;
+  if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
+  else {
+    window.katagoAPI.sendCommand('stop');
+    drawBoard();
   }
-});
+}
 
 // Listen for mouse wheel (scroll)
 window.addEventListener('wheel', (event) => {
@@ -278,13 +272,6 @@ window.addEventListener('wheel', (event) => {
   }
 });
 
-// Listen for right-click
-window.addEventListener('contextmenu', (event) => {
-  event.preventDefault(); // optional: prevent default right-click menu
-  window.katagoAPI.sendCommand('genmove ' + side);
-  window.katagoAPI.sendCommand('showboard');
-});
-
 window.addEventListener('mousedown', (event) => {
   if (event.button === 1) {
     ponder ^= 1;
@@ -295,3 +282,6 @@ window.addEventListener('mousedown', (event) => {
     }
   }
 });
+
+// Get game len
+window.katagoAPI.sendCommand('printsgf');

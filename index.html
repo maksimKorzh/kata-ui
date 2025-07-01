@@ -8,11 +8,30 @@
   <body>
     <style>
       body, button, input, select {
-        background-color: #171421;
+        background-color: #111;
         color: #aaa;
         font-family: monospace;
         font-size: 20px;
       }
+      button {                                                                     
+       -webkit-tap-highlight-color: transparent;
+        width: 100%;
+        padding: 10px;
+        font-size: 11px;
+        background-color: #111;
+        color: #aaa;
+        border: 1px solid #555;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      button:hover {
+        background: #444;
+      }
+      button:active {
+        background-color: black;
+        color: white;
+      }     
       input, select {
         padding: 10px;
         font-size: 20px;
@@ -24,8 +43,10 @@
         border-color: #666;
       }
     </style>
-    <div class="container-center"><div id="goban"></div></div>
-    <div class="container-center"><div id="terminal"></div></div>
+    <div>
+      <div id="goban"></div>
+      <div id="controls"></div>
+    </div>
     <script src="renderer.js"></script>
   </body>
 </html>
