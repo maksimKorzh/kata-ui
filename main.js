@@ -11,10 +11,9 @@ let katago;
 
 function createWindow() {
   const win = new BrowserWindow({
-    fullscreen: true,
-    width: 1720,
-    minWidth:1720,
-    height: 1000,
+    autoHideMenuBar: true,
+    width: 900,
+    height: 950,
     webPreferences: {
       preload: __dirname + '/preload.js'
     }
@@ -33,6 +32,7 @@ function createWindow() {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+  //win.setMenu(null);
   win.loadFile('index.html');
 
   // Start KataGo GTP process

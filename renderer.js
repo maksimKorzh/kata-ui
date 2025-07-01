@@ -216,7 +216,7 @@ window.katagoAPI.onOutput((data) => {
 
 function first() {
   curmove = 1;
-  window.katagoAPI.sendCommand('clear_board');
+  window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
   window.katagoAPI.sendCommand('showboard');
 }
 
@@ -283,5 +283,6 @@ window.addEventListener('mousedown', (event) => {
   }
 });
 
-// Get game len
+window.katagoAPI.sendCommand('loadsgf ' + sgf);
 window.katagoAPI.sendCommand('printsgf');
+first();
