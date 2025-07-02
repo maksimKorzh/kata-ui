@@ -11,5 +11,4 @@ A client to analyze games with Katago
     npm start
 
     NOTE: Before first run make sure to adjust katago path in "main.js"
-          otherwise app would not work. Optionally you may adjust "/path/to/game.sgf"
-          in "renderer.js" to auto load SGF file.
+          otherwise app would not work.
