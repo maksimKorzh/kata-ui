@@ -8,7 +8,7 @@ const moveSound = new Audio('./assets/112-2052.wav');
 
 var canvas, ctx, cell;
 var board = [];
-var sgf = '/home/cmk/go-rank-estimator/game.sgf';
+var sgf = '';
 var currentGame = '';
 var gamelen = 0;
 var size = 19;
@@ -123,9 +123,10 @@ function resizeCanvas() {
       <button onclick="first();"><<<</button>
       <button onclick="prevFew();"><<</button>
       <button onclick="prev();"><</button>
-      <button onclick="analyze();">ANALYZE</button>
-      <button onclick="newGame();">CLEAR</button>
-      <button onclick="download();">DOWNLOAD</button>
+      <button onclick="upload();">LOAD</button>
+      <button onclick="analyze();">MOVE</button>
+      <button onclick="newGame();">DROP</button>
+      <button onclick="download();">SAVE</button>
       <button onclick="next();">></button>
       <button onclick="nextFew();">>></button>
       <button onclick="last();">>>></button>
@@ -272,6 +273,15 @@ function analyze() {
   }
 }
 
+async function upload() {
+  const filePath = await window.katagoAPI.openFile();
+  if (filePath) {
+    sgf = filePath;
+    window.katagoAPI.sendCommand('loadsgf ' + sgf);
+    window.katagoAPI.sendCommand('printsgf');
+  }
+}
+
 function download() {
   window.katagoAPI.sendCommand('printsgf');
   setTimeout(function () {
@@ -297,7 +307,3 @@ window.addEventListener('wheel', (event) => {
     window.katagoAPI.sendCommand('showboard');
   }
 });
-
-window.katagoAPI.sendCommand('loadsgf ' + sgf);
-window.katagoAPI.sendCommand('printsgf');
-first();

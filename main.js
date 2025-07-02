@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -61,6 +61,21 @@ function createWindow() {
   ipcMain.on('send-command', (event, command) => {
     if (katago && katago.stdin.writable) {
       katago.stdin.write(command + '\n');
+    }
+  });
+
+  ipcMain.handle('dialog:openFile', async () => {
+    const result = await dialog.showOpenDialog(win, {
+      properties: ['openFile'],
+      filters: [
+        { name: 'Go Games', extensions: ['sgf'] },
+        { name: 'All Files', extensions: ['*'] }
+      ]
+    });
+    if (result.canceled) {
+      return null;
+    } else {
+      return result.filePaths[0];
     }
   });
 
