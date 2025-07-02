@@ -215,7 +215,7 @@ window.katagoAPI.onOutput((data) => {
 
   // Print SGF
   if (data.includes(';FF')) {
-    currentGame = data.split('= ')[1].split(')')[0];
+    currentGame = data.split('= ')[1].split(')')[0] + ')';
     gamelen = data.split(';').length-1;
   }
 });
@@ -274,13 +274,15 @@ function analyze() {
 
 function download() {
   window.katagoAPI.sendCommand('printsgf');
-  const element = document.createElement('a');
-  const file = new Blob([currentGame], { type: 'text/plain' });
-  element.href = URL.createObjectURL(file);
-  element.download = 'game.sgf';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
+  setTimeout(function () {
+    const element = document.createElement('a');
+    const file = new Blob([currentGame], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'game.sgf';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }, 100);
 }
 
 // Listen for mouse wheel (scroll)
