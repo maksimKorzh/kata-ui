@@ -9,6 +9,7 @@ const moveSound = new Audio('./assets/112-2052.wav');
 var canvas, ctx, cell;
 var board = [];
 var sgf = '/home/cmk/go-rank-estimator/game.sgf';
+var currentGame = '';
 var gamelen = 0;
 var size = 19;
 var side = 'B';
@@ -123,6 +124,8 @@ function resizeCanvas() {
       <button onclick="prevFew();"><<</button>
       <button onclick="prev();"><</button>
       <button onclick="analyze();">ANALYZE</button>
+      <button onclick="newGame();">CLEAR</button>
+      <button onclick="download();">DOWNLOAD</button>
       <button onclick="next();">></button>
       <button onclick="nextFew();">>></button>
       <button onclick="last();">>>></button>
@@ -209,10 +212,20 @@ window.katagoAPI.onOutput((data) => {
       } catch {}
     });
   }
-  
+
   // Print SGF
-  if (data.includes(';FF')) gamelen = data.split(';').length-1;
+  if (data.includes(';FF')) {
+    currentGame = data.split('= ')[1].split(')')[0];
+    gamelen = data.split(';').length-1;
+  }
 });
+
+function newGame() {
+  curmove = 1;
+  currentGame = '';
+  window.katagoAPI.sendCommand('clear_board');
+  window.katagoAPI.sendCommand('showboard');
+}
 
 function first() {
   curmove = 1;
@@ -259,6 +272,17 @@ function analyze() {
   }
 }
 
+function download() {
+  window.katagoAPI.sendCommand('printsgf');
+  const element = document.createElement('a');
+  const file = new Blob([currentGame], { type: 'text/plain' });
+  element.href = URL.createObjectURL(file);
+  element.download = 'game.sgf';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
 // Listen for mouse wheel (scroll)
 window.addEventListener('wheel', (event) => {
   if (event.deltaY < 0) {
@@ -269,17 +293,6 @@ window.addEventListener('wheel', (event) => {
     curmove++;
     window.katagoAPI.sendCommand('loadsgf ' + sgf + ' ' + curmove);
     window.katagoAPI.sendCommand('showboard');
-  }
-});
-
-window.addEventListener('mousedown', (event) => {
-  if (event.button === 1) {
-    ponder ^= 1;
-    if (ponder) window.katagoAPI.sendCommand('kata-analyze 1');
-    else {
-      window.katagoAPI.sendCommand('stop');
-      drawBoard();
-    }
   }
 });
 
