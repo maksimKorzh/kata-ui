@@ -120,16 +120,16 @@ function resizeCanvas() {
   resizeCanvas();
   document.getElementById('controls').innerHTML = `
     <div style="display: flex; gap: 4px; width: 100%;">                               
-      <button onclick="first();"><<<</button>
-      <button onclick="prevFew();"><<</button>
-      <button onclick="prev();"><</button>
-      <button onclick="upload();">LOAD</button>
-      <button onclick="analyze();">MOVE</button>
-      <button onclick="newGame();">DROP</button>
-      <button onclick="download();">SAVE</button>
-      <button onclick="next();">></button>
-      <button onclick="nextFew();">>></button>
-      <button onclick="last();">>>></button>
+      <button id="first" disabled="true" onclick="first();"><<<</button id="" disabled="true">
+      <button id="prevfew" disabled="true" onclick="prevFew();"><<</button id="" disabled="true">
+      <button onclick="prev();">UNDO</button id="" disabled="true">
+      <button onclick="upload();">LOAD</button id="" disabled="true">
+      <button onclick="analyze();">MOVE</button id="" disabled="true">
+      <button onclick="newGame();">DROP</button id="" disabled="true">
+      <button onclick="download();">SAVE</button id="" disabled="true">
+      <button id="next" disabled="true" onclick="next();">NEXT</button id="" disabled="true">
+      <button id="nextfew" disabled="true" onclick="nextFew();">>></button id="" disabled="true">
+      <button id="last" disabled="true" onclick="last();">>>></button id="" disabled="true">
     </div>
   `;
 })();
@@ -224,6 +224,13 @@ window.katagoAPI.onOutput((data) => {
 function newGame() {
   curmove = 1;
   currentGame = '';
+  sgf = '';
+  gamelen = 0;
+  document.getElementById('first').disabled = true;
+  document.getElementById('prevfew').disabled = true;
+  document.getElementById('next').disabled = true;
+  document.getElementById('nextfew').disabled = true;
+  document.getElementById('last').disabled = true;
   window.katagoAPI.sendCommand('clear_board');
   window.katagoAPI.sendCommand('showboard');
 }
@@ -277,6 +284,11 @@ async function upload() {
   const filePath = await window.katagoAPI.openFile();
   if (filePath) {
     sgf = filePath;
+    document.getElementById('first').disabled = false;
+    document.getElementById('prevfew').disabled = false;
+    document.getElementById('next').disabled = false;
+    document.getElementById('nextfew').disabled = false;
+    document.getElementById('last').disabled = false;
     window.katagoAPI.sendCommand('loadsgf ' + sgf);
     window.katagoAPI.sendCommand('printsgf');
   }
